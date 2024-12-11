@@ -7,12 +7,12 @@
 
     $search_name = (isset($_GET['search_input']) ? $_GET['search_input'] : '');
     $sort = (isset($_GET['sort']) ? $_GET['sort'] : '');
-    $sql_num = "SELECT COUNT(id) FROM users WHERE fullname LIKE '%$search_name%' ORDER BY '$sort' DESC";
+    $sql_num = "SELECT COUNT(id) FROM users WHERE id LIKE '%$search_name%' ORDER BY '$sort' DESC";
     $query_num = mysqli_query($condb,$sql_num);
     $row_num = mysqli_fetch_row($query_num);
  
 	$rows = $row_num[0];
-	$page_rows = 2;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+	$page_rows = 10;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
 	$last = ceil($rows/$page_rows);
  
 	if($last < 1){
@@ -34,7 +34,7 @@
  
 	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
  
-	$nquery=mysqli_query($condb,"SELECT * FROM users WHERE fullname LIKE '%$search_name%' ORDER BY '$sort' DESC $limit");
+	$nquery=mysqli_query($condb,"SELECT * FROM users WHERE id LIKE '%$search_name%' ORDER BY '$sort' DESC $limit");
  
 	$paginationCtrls = '';
  
@@ -86,13 +86,14 @@
         <hr style="max-width: 300px" class="mx-auto" >
     </div>
     
-    <form class="mx-auto mb-3 align-items-center d-flex col-md-6" method="GET" enctype="multipart/form-data" action="">
+    <form class="mx-auto align-items-center d-flex col-md-6" method="GET" enctype="multipart/form-data" action="">
         <label for="sort" id="search" >ค้นหา</label>&nbsp;
-        <input class="form-control" type="text" id="search_input" name="search_input" placeholder="รหัสสมาชิก" value="<?php echo $search_name ?>">&nbsp;
+        <input class="form-control" type="text" id="search_input" name="search_input" placeholder="รหัสสมาชิกเฉพาะตัวเลขเท่านั้น" value="<?php echo $search_name ?>">&nbsp;
         <button class="btn btn-primary" type="submit" id="search_btn"><i class="fa fa-search"></i></button>&nbsp;
     </form>
+    <small class="text-secondary">ตัวอย่างเช่น รหัส PS0101 ให้พิมพ์แค่ 101</small>
     
-    <div class="table-responsive">
+    <div class="table-responsive mt-3">
         <table class="table table-striped">
             <thead class="bg-success">
                 <tr>
@@ -100,6 +101,7 @@
                 <th scope="col">เบอร์โทรศัพท์</th>
                 <th scope="col">ชื่อ-สกุล</th>
                 <th scope="col">ที่อยู่</th>
+                <th scope="col">ส่งแล้ว</th>
                 <th scope="col"></th>
                 </tr>
             </thead>
@@ -109,26 +111,48 @@
                     if(mysqli_num_rows($nquery) > 0 ) {
                     while($row = mysqli_fetch_assoc($nquery)) { ?>
                 <tr>
-                    <td><?php echo "PS" . sprintf("%04d", $row['id']);?></td>
+                    <td><?php $user_id = "PS" . sprintf("%04d", $row['id']); echo $user_id; ?></td>
                     <td><?php echo $row['fullname'];?></td>
                     <td><?php echo $row['role'];?></td>
                     <td><?php echo $row['address'];?></td>
-                    <td class="d-flex flex-column gap-2">
-                        <a href="./print.php?id=<?php echo $row['id'] ?>" 
-                            class="btn btn-primary d-flex justify-content-center align-items-center gap-2" style="max-width: max-content;"
+                    <td><?php echo $row['sent'];?></td>
+                    <td class="d-flex flex-column gap-1">
+                        <a href="./print.php?id=<?php echo $row['id']; ?>" 
+                            class="btn btn-primary btn-sm d-flex justify-content-center align-items-center gap-1" style="max-width: max-content;"
                         >
                             <i class="fa fa-print" aria-hidden="true"></i> Print
                         </a>
-                        <form method="POST" action="actions/delete_user.php" id="submitDeleteUser">
-                            <button 
-                                class="btn btn-danger d-flex justify-content-center align-items-center gap-2"
+
+                        <form
+                            id="submitSendUser<?php echo $user_id ?>"
+                            action="./actions/update-sent.php"
+                            method="POST"
+                        >
+                            <button
+                                class="btn btn-sm btn-success d-flex justify-content-center align-items-center gap-1" style="max-width: max-content;"
                                 type="button"
-                                onclick="confirmDeleteHandler('<?php echo $row['id'];?>');"
+                                onclick="confirmSendHandler('<?php echo $user_id; ?>');"
                             >
-                                <input name="user_id" type="hidden" value="<?php echo $row['id'];?>">
-                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                <input type="text" name="user_id" value="<?php echo $row['id']; ?>" style="display: none;">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> ส่ง+1
                             </button>
                         </form>
+
+                        <form
+                            id="submitDeleteUser<?php echo $user_id ?>"
+                            action="./actions/delete_user.php"
+                            method="POST"
+                        >
+                            <button
+                                type="button"
+                                onclick="confirmDeleteHandler('<?php echo $user_id; ?>');"
+                                class="btn btn-sm btn-danger d-flex justify-content-center align-items-center gap-1" style="max-width: max-content;"
+                            >
+                                <input type="text" name="delete_id" value="<?php echo $row['id']; ?>" style="display: none;">
+                                <i class="fa fa-trash" aria-hidden="true"></i> ลบสมาชิก
+                            </button>
+                        </form>
+                        
                     </td>
                 <?php }
                 } mysqli_close($condb);?>
@@ -137,6 +161,7 @@
         </table>
         <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>
     </div>
+
 </body>
 <?php
 include_once("./component/footer.php")
@@ -144,9 +169,15 @@ include_once("./component/footer.php")
 </html>
 
 <script>
-    function confirmDeleteHandler(email) {
-        if (confirm("คุณยืนยันที่จะลบข้อมูลของอีเมล์ " + email) == true) {
-            document.getElementById("submitDeleteUser").submit();
+    function confirmDeleteHandler(user_id) {
+        if (confirm("ยืนยันที่จะลบข้อมูลของ " + user_id) == true) {
+            document.getElementById("submitDeleteUser" + user_id).submit();
+        } else return;
+    }
+
+    function confirmSendHandler(user_id) {
+        if (confirm("ยืนยันที่จะส่งของให้กับ " + user_id) == true) {
+            document.getElementById("submitSendUser" + user_id).submit();
         } else return;
     }
 </script>
