@@ -39,13 +39,11 @@
 </head>
 <nav class="navbar bg-danger navbar-expand-lg mb-5" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand ms-5" href="https://www.youtube.com/@permsap"><i class="fa-brands fa-youtube"></i> PermSap</a>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ms-auto me-5">
-        <a class="nav-link text-light" href="index.php?logout='1'">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
-      </div>
+    <a class="navbar-brand" href="https://www.youtube.com/@permsap"><i class="fa-brands fa-youtube"></i> PermSap</a>
+    <div class="navbar-nav ms-auto me-3">
+      <a class="nav-link text-light" href="index.php?logout='1'">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </a>
     </div>
   </div>
 </nav>

@@ -20,7 +20,8 @@ if (isset($_POST['login'])) {
             window.location.href='../index.php';
             </script>";
 
-    } else if (mysqli_num_rows($query) == 1 && $result['role'] == 'admin') { 
+    } else if (mysqli_num_rows($query) == 1 && $result['role'] == 'admin') {
+        $_SESSION['id'] = $result['id'];
         $_SESSION['admin'] = true;
         $_SESSION['login'] = true;
         echo "<script>

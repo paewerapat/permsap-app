@@ -1,7 +1,7 @@
 <?php
     $host = "localhost";
-    $user = "root";
-    $password = "1234";
+    $user = "zddqlszw_permzap_app";
+    $password = "P@ssw0rd@123";
     $databasename = "zddqlszw_permzap_app";
 
     // DB_HOSTNAME=localhost
