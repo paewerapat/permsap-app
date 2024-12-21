@@ -45,32 +45,32 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">เบอร์โทรศัพท์</label>
-                    <input type="text" class="form-control" name="tel" maxlength="10" required>
+                    <input type="text" class="form-control" name="tel" minlength="6" maxlength="10" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <input type="password" name="password" class="form-control" required minlength="4">
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">ยืนยันรหัสผ่าน</label>
-                    <input type="password" name="cfPassword" class="form-control" required>
+                    <input type="password" name="cfPassword" class="form-control" required minlength="4">
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">ชื่อ-สกุล</label>
-                    <input type="text" name="fullname" class="form-control" required>
+                    <label for="exampleInputPassword1" class="form-label">ชื่อ-สกุล(ในการจัดส่ง)</label>
+                    <input type="text" name="fullname" class="form-control" placeholder="ชื่อในการส่งไปรษณีย์" required minlength="4">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">ที่อยู่(ในการจัดส่ง)</label>
+                    <textarea type="text" name="address" class="form-control" required minlength="4"></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">ไอดีไลน์</label>
-                    <input type="text" name="id_line" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">ที่อยู่</label>
-                    <textarea type="text" name="address" class="form-control" required></textarea>
+                    <input type="text" name="id_line" class="form-control" required minlength="4">
                 </div>
 
                 <button type="submit" name="register" class="btn btn-success w-100 py-2">ยืนยันข้อมูล</button>

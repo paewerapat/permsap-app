@@ -1,7 +1,7 @@
 <?php
   session_start();
   if(isset($_SESSION['login']) && $_SESSION['admin'] == false) {
-    Header('location: ./index.php');
+    Header('location: ./profile.php');
   } else if (isset($_SESSION['login']) && $_SESSION['admin'] == true) {
     Header('location: ./admin.php');
   }

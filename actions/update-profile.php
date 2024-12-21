@@ -3,10 +3,10 @@
 include('db.php');
 
 if (isset($_POST['update-profile'])) {
-    $tel = mysqli_real_escape_string($condb, $_POST['tel']);
-    $id_line = mysqli_real_escape_string($condb, $_POST['id_line']);
-    $fullname = mysqli_real_escape_string($condb, $_POST['fullname']);
-    $address = mysqli_real_escape_string($condb, htmlspecialchars($_POST['address']));
+    $tel = $_POST['tel'];
+    $id_line = $_POST['id_line'];
+    $fullname = $_POST['fullname'];
+    $address = htmlspecialchars($_POST['address']);
 
     $sql = "UPDATE users SET tel='$tel', id_line='$id_line', address='$address', fullname='$fullname'";
     $result = mysqli_query($condb, $sql);

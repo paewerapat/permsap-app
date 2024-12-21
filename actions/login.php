@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {
         $_SESSION['login'] = true;
         echo "<script>
             alert('เข้าสู่ระบบเรียบร้อยแล้ว');
-            window.location.href='../index.php';
+            window.location.href='../profile.php';
             </script>";
 
     } else if (mysqli_num_rows($query) == 1 && $result['role'] == 'admin') {

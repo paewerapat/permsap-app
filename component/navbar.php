@@ -3,7 +3,7 @@
 
   if (isset($_GET['logout'])) {
     session_destroy();
-    Header('location: login.php');
+    Header('location: ./index.php');
   }
 
   $id = $_SESSION['id'];
