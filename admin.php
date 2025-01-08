@@ -71,7 +71,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PermSap เที่ยวคนเดียว | สวัสดีแอดมิน</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -111,7 +111,17 @@
                     if(mysqli_num_rows($nquery) > 0 ) {
                     while($row = mysqli_fetch_assoc($nquery)) { ?>
                 <tr>
-                    <td><?php $user_id = "PS" . sprintf("%04d", $row['id']); echo $user_id; ?></td>
+                    <td>
+                        <div class="d-flex flex-column gap-1">
+                            <?php $user_id = "PS" . sprintf("%04d", $row['id']); echo $user_id; ?>
+                            <button class="btn btn-dark btn-sm" 
+                                style="max-width: max-content;"
+                                onclick="copyToClipboardHandler('<?php echo $row['tel'];?>', '<?php echo $row['fullname'];?>', '<?php echo $row['address'];?>');"
+                            >
+                                <i class="fa-solid fa-copy"></i> COPY
+                            </button>
+                        </div>
+                    </td>
                     <td><?php echo $row['fullname'];?></td>
                     <td><?php echo $row['role'];?></td>
                     <td><?php echo $row['address'];?></td>
@@ -169,6 +179,12 @@ include_once("./component/footer.php")
 </html>
 
 <script>
+
+    function copyToClipboardHandler(tel, fullname, address) {
+        navigator.clipboard.writeText(`${tel} ${fullname} ${address}`);
+        alert("คัดลอกข้อมูลสำเร็จ");
+    }
+
     function confirmDeleteHandler(user_id) {
         if (confirm("ยืนยันที่จะลบข้อมูลของ " + user_id) == true) {
             document.getElementById("submitDeleteUser" + user_id).submit();

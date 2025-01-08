@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ยินดีต้อนรับสู่ครอบครัว PermSap</title>
+    <title>PermSap เที่ยวคนเดียว | ยินดีต้อนรับสู่ครอบครัว PermSap</title>
 </head>
 <body>
     <p>

@@ -18,7 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ยินดีต้อนรับสู่ครอบครัว PermSap</title>
+    <title>PermSap เที่ยวคนเดียว | ยินดีต้อนรับสู่ครอบครัว PermSap</title>
 </head>
 <?php
     include_once('./component/navbar.php')
@@ -49,7 +49,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">ที่อยู่(ในการจัดส่ง)</label>
-                        <input type="text" disabled class="form-control" value="<?php echo $result['address'] ?>">
+                        <input type="text" disabled class="form-control" name="address" value="<?php echo $result['address'] ?>">
                     </div>
                     <div class="mb-3">
                          <label class="form-label">ไอดีไลน์</label>
@@ -75,6 +75,7 @@
                 </div>
                 <div class="modal-body">
 
+                    <input type="text" name="id" value="<?php echo $result['id'] ?>" hidden>
                     <div>
                         <div class="text-center mb-3">
                             <img src="./images/logo-name.jpg" alt="logo" style="max-height: 120px; border-radius: 50%;">
